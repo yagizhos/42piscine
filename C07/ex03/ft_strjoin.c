@@ -6,79 +6,82 @@
 /*   By: yhos <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 12:04:54 by yhos              #+#    #+#             */
-/*   Updated: 2022/08/25 19:26:56 by yhos             ###   ########.fr       */
+/*   Updated: 2022/08/30 12:26:48 by yhos             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+
 int	find_final_size(int size, char **strs, char *sep)
 {
-	int	s;
+	int	final_size;
 	int	i;
-	int	j;
-	int	k;
 
-	s = 0;
+	final_size = 0;
 	i = 0;
 	while (i < size)
-	{
-		j = 0;
-		while (strs[i][j])
-		{
-			s++;
-			j++;
-		}
-		i++;
-	}
-	k = 0;
-	while (sep[k])
-		k++;
-	s += k * (size - 1);
-	return (s);
+		final_size += ft_strlen(strs[i++]) + ft_strlen(sep);
+	if (size > 0)
+		final_size -= ft_strlen(sep);
+	return (final_size);
 }
 
 char	*ft_strcat(char *dest, char *src)
 {
-	char	*start;
+	int	dest_len;
+	int	i;
 
-	start = dest;
-	while (*dest != '\0')
-		dest++;
-	while (*src != '\0')
+	dest_len = ft_strlen(dest);
+	i = 0;
+	while (src[i])
 	{
-		*dest = *src;
-		dest++;
-		src++;
+		dest[dest_len + i] = src[i];
+		i++;
 	}
-	*dest = '\0';
-	return (start);
+	dest[dest_len + i] = '\0';
+	return (dest);
 }
 
 char	*ft_strjoin(int size, char **strs, char *sep)
 {
 	char	*r;
-	int		j;
+	int		i;
+	int		fs;
 
-	if (size <= 0)
-	{
-		r = malloc(sizeof(char));
-		if (!r)
-			return (0);
-		*r = '\0';
-		return (r);
-	}
-	j = 0;
-	r = malloc(sizeof(char) * (find_final_size(size, strs, sep) + 1));
-	if (!r)
+	i = 0;
+	fs = find_final_size(size, strs, sep);
+	r = malloc(sizeof(char) * (fs + 1));
+	if (r == NULL)
 		return (0);
-	while (j < size)
+	r[0] = '\0';
+	if (size == 0)
+		return (r);
+	while (i < size)
 	{
-		ft_strcat(r, strs[j]);
-		if (j + 1 != size)
+		ft_strcat(r, strs[i]);
+		if (i < size - 1)
 			ft_strcat(r, sep);
-		j++;
+		i++;
 	}
-	r[j] = '\0';
+	r[ft_strlen(r)] = '\0';
 	return (r);
 }
+/*
+int main()
+{
+	char *s[100] = {"hocxzzxczxc", "hisdfsd", "goqqweqwe"};
+	char sep[100] = "/    /";
+	char *r = ft_strjoin(3, s, sep);
+	printf("%s\n", r);
+	free(r);
+}*/
