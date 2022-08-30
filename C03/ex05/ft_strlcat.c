@@ -26,7 +26,7 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 	unsigned int	j;
 
 	i = ft_strlen(dest);
-	if (src[0] == '\0' || size < i)
+	if (size <= i)
 		return (ft_strlen(src) + size);
 	j = 0u;
 	while (j < (size - i - 1) && src[j])
