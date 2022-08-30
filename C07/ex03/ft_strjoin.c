@@ -76,12 +76,3 @@ char	*ft_strjoin(int size, char **strs, char *sep)
 	r[ft_strlen(r)] = '\0';
 	return (r);
 }
-/*
-int main()
-{
-	char *s[100] = {"hocxzzxczxc", "hisdfsd", "goqqweqwe"};
-	char sep[100] = "/    /";
-	char *r = ft_strjoin(3, s, sep);
-	printf("%s\n", r);
-	free(r);
-}*/
